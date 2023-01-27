@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <style>
+      html, body, .container {
+        width: 100vw;
+        height: 100vh;
+      }
+      .container {
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+      }
+      .total {
+        background-color: rgb(72, 101, 124);
+        border-radius: 999px;
+        position: relative;
+        top: 0;
+        left: 0;
+        overflow: visible;
+      }
+      .elapsed {
+        background-color: rgb(144, 202, 249);
+        border-radius: 999px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 999;
+      }
+    </style>
+    <script>
+      $(() => {
+        const barWidth = 500;
+        $(".total").width(barWidth);
+
+        const barHeight = 10;
+        $(".total").height(barHeight);
+        $(".elapsed").height(barHeight);
+
+        const now = new Date(Date.now());
+        const start = new Date(2023, 0, 9);
+        const end = new Date(2023, 3, 28);
+        const msPerDay = 24 * 3600 * 1000;
+        const totalDays = Math.ceil((end - start) / msPerDay);
+        const elapsedDays = Math.ceil((now - start) / msPerDay);
+        const percentElapsed = elapsedDays / totalDays;
+        $(".elapsed").width(barWidth * percentElapsed);
+
+        const feb = new Date(2023, 1, 1);
+        const mar = new Date(2023, 2, 1);
+        const apr = new Date(2023, 3, 1);
+        const febPercent = Math.ceil((feb - start) / msPerDay) / totalDays;
+        const marPercent = Math.ceil((mar - start) / msPerDay) / totalDays;
+        const aprPercent = Math.ceil((apr - start) / msPerDay) / totalDays;
+        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed < febPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${febPercent*barWidth}px"></div>`);
+        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed < marPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${marPercent*barWidth}px"></div>`);
+        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed < aprPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${aprPercent*barWidth}px"></div>`);
+
+        const feb18 = new Date(2023, 1, 18);
+        const feb26 = new Date(2023, 1, 26);
+        const feb18Percent = Math.ceil((feb18 - start) / msPerDay) / totalDays;
+        const feb26Percent = Math.ceil((feb26 - start) / msPerDay) / totalDays;
+        const breakPercent = feb26Percent - feb18Percent;
+        const breakWidth = breakPercent * barWidth;
+        $(".total").append(`<div style="width: ${breakWidth}px; height: ${barHeight}px; background-color: pink; position: absolute; left: ${feb18Percent*barWidth}px"></div>`);
+
+        const apr17 = new Date(2023, 3, 17);
+        const apr28 = new Date(2023, 3, 28);
+        const apr17Percent = Math.ceil((apr17 - start) / msPerDay) / totalDays;
+        const apr28Percent = Math.ceil((apr28 - start) / msPerDay) / totalDays;
+        const examPercent = apr28Percent - apr17Percent;
+        const examWidth = examPercent * barWidth;
+        $(".total").append(`<div style="width: ${examWidth}px; height: ${barHeight}px; background-color: pink; position: absolute; left: ${apr17Percent*barWidth}px; border-radius: 0 999px 999px 0"></div>`);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="total">
+        <div class="elapsed"></div>
+      </div>
+    </div>
+  </body>
+</html>
