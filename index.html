@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       * {
         padding: 0;
@@ -58,9 +59,9 @@
         const febPercent = Math.ceil((feb - start) / msPerDay) / totalDays;
         const marPercent = Math.ceil((mar - start) / msPerDay) / totalDays;
         const aprPercent = Math.ceil((apr - start) / msPerDay) / totalDays;
-        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed < febPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${febPercent*barWidth}px"></div>`);
-        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed < marPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${marPercent*barWidth}px"></div>`);
-        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed < aprPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${aprPercent*barWidth}px"></div>`);
+        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed <= febPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${febPercent*barWidth}px"></div>`);
+        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed <= marPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${marPercent*barWidth}px"></div>`);
+        $(".total").append(`<div style="width: 10px; height: 30px; background-color: ${percentElapsed <= aprPercent ? "rgb(72, 101, 124)" : "rgb(144, 202, 249)"}; border-radius: 999px; position: absolute; top: -10px; left: ${aprPercent*barWidth}px"></div>`);
 
         const feb18 = new Date(2023, 1, 18);
         const feb26 = new Date(2023, 1, 26);
